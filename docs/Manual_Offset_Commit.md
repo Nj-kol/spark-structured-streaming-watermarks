@@ -1,0 +1,1 @@
+https://www.dataengi.com/post/2019/06/06/spark-structured-streaming/

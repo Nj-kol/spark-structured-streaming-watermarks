@@ -1,0 +1,134 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.njkol</groupId>
+	<artifactId>spark-structured-streaming-watermarks</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+
+		<!-- Spark -->
+		<spark.version>3.1.1</spark.version>
+
+		<!-- Maven -->
+		<encoding>UTF-8</encoding>
+		<maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.surefire.plugin.version>2.18.1</maven.surefire.plugin.version>
+		<maven.shade.plugin.version>2.3</maven.shade.plugin.version>
+		<scala.maven.plugin.version>3.2.1</scala.maven.plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Java -->
+		<java.source.version>1.8</java.source.version>
+		<java.target.version>1.8</java.target.version>
+
+		<!-- Scala -->
+		<scala.version>2.12.3</scala.version>
+		<scala.compat.version>2.12</scala.compat.version>
+
+		<spark.version>3.1.1</spark.version>
+
+		<!-- Cross Cutting Concerns -->
+		<log4j.version>2.8.2</log4j.version>
+		<junit.version>4.12</junit.version>
+		<typesafe.config.version>1.2.1</typesafe.config.version>
+
+		<!-- Plugins -->
+		<scalastyle.maven.plugin.version>1.0.0</scalastyle.maven.plugin.version>
+		<scalatest.maven.plugin.version>1.0</scalatest.maven.plugin.version>
+		<scalatest.version>3.0.1</scalatest.version>
+		<scoverage.plugin.version>1.3.0</scoverage.plugin.version>
+		<scoverage.scalacPluginVersion>1.3.0</scoverage.scalacPluginVersion>
+	</properties>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql_${scala.compat.version}</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming_${scala.compat.version}</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql-kafka-0-10_${scala.compat.version}</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+
+	</dependencies>
+
+
+	<build>
+		<sourceDirectory>src/main/scala</sourceDirectory>
+		<testSourceDirectory>src/test/scala</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<!-- see http://davidb.github.com/scala-maven-plugin -->
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>${scala.maven.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<args>
+								<arg>-dependencyfile</arg>
+								<arg>${project.build.directory}/.scala_dependencies</arg>
+							</args>
+							<jvmArgs>
+								<jvmArg>-Xms64m</jvmArg>
+								<jvmArg>-Xmx1024m</jvmArg>
+							</jvmArgs>
+							<scalaVersion>${scala.version}</scalaVersion>
+							<recompileMode>incremental</recompileMode>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Maven shade plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>${maven.shade.plugin.version}</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes>
+						</filter>
+					</filters>
+					<finalName>${project.artifactId}-${project.version}-jar-with-dependencies</finalName>
+					<outputDirectory>${project.basedir}/deployment</outputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
