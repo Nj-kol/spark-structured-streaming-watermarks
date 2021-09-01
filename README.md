@@ -9,16 +9,7 @@ Programs -
 
 ## Kafka Cluster Setup
 
-**Customize**
-
-```bash
-cd kafka
-
-vim docker-compose.yaml
-```
-
-* You need to edit the line `KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,PLAINTEXT_HOST://10.259.35.27:29092`. Change the IP address from `10.259.35.27` to the IP of your system
-* You can also add your your custom volumes. THhe compose file does not contain any volumes and thus all kafka topics (& all other data) go away once it's shut down
+See README under the ./kafka folder
 
 **Launch the Cluster**
 
