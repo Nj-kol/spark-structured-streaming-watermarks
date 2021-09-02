@@ -22,7 +22,8 @@ object SparkSSLauncher extends App {
     
   spark.sparkContext.setLogLevel("ERROR")
   spark.conf.set("spark.sql.session.timeZone", "GMT")
-    
-  val tester = new KafkaWaterMarking()
-  tester.runJob(spark)
+   
+  // run demo for Watermarking
+  val tester = new KafkaWaterMarking(spark)
+  tester.runJob()
 }

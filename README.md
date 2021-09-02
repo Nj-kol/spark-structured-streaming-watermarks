@@ -1,6 +1,8 @@
 # Watermarks Demo : Spark Structured Streaming 
 
-Contains several demos of Spark Structured Streaming written in Scala. The code is mostly a translation of wonderful demos in PySpark by Amit Ranjan which you can find [here](https://www.youtube.com/playlist?list=PLHJp-gMPHvp_YDqkmQqPF2M1M7C1-otdC) adapted for a local environment instead of the cloud
+Contains demos of Spark Structured Streaming written in Scala. 
+
+The code is mostly a translation of wonderful demos in PySpark by **Amit Ranjan** which you can find [here](https://www.youtube.com/playlist?list=PLHJp-gMPHvp_YDqkmQqPF2M1M7C1-otdC) adapted and reimagined with ksqlDB for a local environment instead of the cloud
 
 Programs -
 

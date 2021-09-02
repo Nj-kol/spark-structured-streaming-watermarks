@@ -9,16 +9,16 @@ import org.apache.spark.sql.types._
  *
  * @author Nilanjan Sarkar
  */
-class KafkaWaterMarking {
+class KafkaWaterMarking(spark: SparkSession){
 
   private val kafkaServer = "10.159.25.58:29092"
   private val topicName = "lines"
 
-  def runJob(spark: SparkSession) {
+  def runJob() {
 
     val linesSchema = StructType(Seq(
-      StructField("ts", LongType, true),
-      StructField("content", StringType, true)))
+      StructField("TS", LongType, true),
+      StructField("CONTENT", StringType, true)))
 
     val linesStream = spark.readStream
       .format("kafka")
